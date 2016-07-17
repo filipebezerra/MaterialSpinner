@@ -1,4 +1,4 @@
-package fr.ganfra.materialspinner;
+package smtchahal.materialspinner;
 
 import android.content.Context;
 import android.content.res.TypedArray;

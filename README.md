@@ -47,7 +47,7 @@ compile ('com.github.smtchahal:MaterialSpinner:1.1.3'){
 In the xml : 
 
 ```xml
-<fr.ganfra.materialspinner.MaterialSpinner
+<smtchahal.MaterialSpinner
         android:id="@+id/spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 

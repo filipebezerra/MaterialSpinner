@@ -11,7 +11,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
 
-        <fr.ganfra.materialspinner.MaterialSpinner
+        <smtchahal.materialspinner.MaterialSpinner
             android:id="@+id/spinner1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,7 @@
             app:ms_hint="hint"
             app:ms_multiline="true" />
 
-        <fr.ganfra.materialspinner.MaterialSpinner
+        <smtchahal.materialspinner.MaterialSpinner
             android:id="@+id/spinner2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -31,14 +31,14 @@
             app:ms_hint="hint"
             app:ms_hintColor="#0000FF" />
 
-        <fr.ganfra.materialspinner.MaterialSpinner
+        <smtchahal.materialspinner.MaterialSpinner
             android:id="@+id/spinner3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             app:ms_enableErrorLabel="false"
             app:ms_enableFloatingLabel="false" />
 
-        <fr.ganfra.materialspinner.MaterialSpinner
+        <smtchahal.materialspinner.MaterialSpinner
             android:id="@+id/spinner4"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
             app:ms_baseColor="@color/spinner_base_color"
             app:ms_multiline="false" />
 
-        <fr.ganfra.materialspinner.MaterialSpinner
+        <smtchahal.materialspinner.MaterialSpinner
             android:id="@+id/spinner5"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />

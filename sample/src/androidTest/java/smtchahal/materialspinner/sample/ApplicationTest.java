@@ -1,4 +1,4 @@
-package fr.ganfra.materialspinner.sample;
+package smtchahal.materialspinner.sample;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,11 +1,11 @@
-package fr.ganfra.materialspinner.sample;
+package smtchahal.materialspinner.sample;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
-import fr.ganfra.materialspinner.MaterialSpinner;
+import smtchahal.materialspinner.MaterialSpinner;
 
 
 public class MainActivity extends ActionBarActivity {
