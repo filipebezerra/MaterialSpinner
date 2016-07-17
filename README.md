@@ -6,6 +6,8 @@ Spinner with Material Design - Down to API 9
 This library provides you a Spinner with the Material style. You can use it like any regular Spinner. 
 Add floating label text, hint and error messages.
 
+This project is a fork of https://github.com/ganfra/MaterialSpinner.
+
 ## Screenshots
 ![MaterialSpinner](./screenshots/screenshot.gif)
 
