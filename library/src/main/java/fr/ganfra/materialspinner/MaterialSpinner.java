@@ -8,6 +8,7 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatSpinner;
 import android.text.Layout;
 import android.text.StaticLayout;
@@ -29,7 +30,8 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import com.nineoldandroids.animation.ValueAnimator;
 
 
-public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.AnimatorUpdateListener {
+public class MaterialSpinner extends AppCompatSpinner
+        implements ValueAnimator.AnimatorUpdateListener {
 
     public static final int DEFAULT_ARROW_WIDTH_DP = 12;
 
@@ -148,31 +150,36 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
 
     private void initAttributes(Context context, AttributeSet attrs) {
 
-        TypedArray defaultArray = context.obtainStyledAttributes(new int[]{R.attr.colorControlNormal, R.attr.colorAccent});
+        TypedArray defaultArray = context.obtainStyledAttributes(new int[]
+                {R.attr.colorControlNormal, R.attr.colorAccent});
         int defaultBaseColor = defaultArray.getColor(0, 0);
         int defaultHighlightColor = defaultArray.getColor(1, 0);
-        int defaultErrorColor = context.getResources().getColor(R.color.error_color);
+        int defaultErrorColor = ContextCompat.getColor(context, R.color.error_color);
         defaultArray.recycle();
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.MaterialSpinner);
         baseColor = array.getColor(R.styleable.MaterialSpinner_ms_baseColor, defaultBaseColor);
-        highlightColor = array.getColor(R.styleable.MaterialSpinner_ms_highlightColor, defaultHighlightColor);
+        highlightColor = array.getColor(R.styleable.MaterialSpinner_ms_highlightColor,
+                defaultHighlightColor);
         errorColor = array.getColor(R.styleable.MaterialSpinner_ms_errorColor, defaultErrorColor);
-        disabledColor = context.getResources().getColor(R.color.disabled_color);
+        disabledColor = ContextCompat.getColor(context, R.color.disabled_color);
         error = array.getString(R.styleable.MaterialSpinner_ms_error);
         hint = array.getString(R.styleable.MaterialSpinner_ms_hint);
         hintColor = array.getColor(R.styleable.MaterialSpinner_ms_hintColor, baseColor);
         floatingLabelText = array.getString(R.styleable.MaterialSpinner_ms_floatingLabelText);
-        floatingLabelColor = array.getColor(R.styleable.MaterialSpinner_ms_floatingLabelColor, baseColor);
+        floatingLabelColor = array.getColor(
+                R.styleable.MaterialSpinner_ms_floatingLabelColor, baseColor);
         multiline = array.getBoolean(R.styleable.MaterialSpinner_ms_multiline, true);
         minNbErrorLines = array.getInt(R.styleable.MaterialSpinner_ms_nbErrorLines, 1);
         alignLabels = array.getBoolean(R.styleable.MaterialSpinner_ms_alignLabels, true);
         thickness = array.getDimension(R.styleable.MaterialSpinner_ms_thickness, 1);
         thicknessError = array.getDimension(R.styleable.MaterialSpinner_ms_thickness_error, 2);
         arrowColor = array.getColor(R.styleable.MaterialSpinner_ms_arrowColor, baseColor);
-        arrowSize = array.getDimension(R.styleable.MaterialSpinner_ms_arrowSize, dpToPx(DEFAULT_ARROW_WIDTH_DP));
+        arrowSize = array.getDimension(
+                R.styleable.MaterialSpinner_ms_arrowSize, dpToPx(DEFAULT_ARROW_WIDTH_DP));
         enableErrorLabel = array.getBoolean(R.styleable.MaterialSpinner_ms_enableErrorLabel, true);
-        enableFloatingLabel = array.getBoolean(R.styleable.MaterialSpinner_ms_enableFloatingLabel, true);
+        enableFloatingLabel = array.getBoolean(
+                R.styleable.MaterialSpinner_ms_enableFloatingLabel, true);
         isRtl = array.getBoolean(R.styleable.MaterialSpinner_ms_isRtl, false);
 
         String typefacePath = array.getString(R.styleable.MaterialSpinner_ms_typeface);
@@ -227,6 +234,10 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
 
     @Override
     public int getSelectedItemPosition() {
+        // Return 1 less than the actual value if hint is set
+        if (hint != null) {
+            return super.getSelectedItemPosition() - 1;
+        }
         return super.getSelectedItemPosition();
     }
 
@@ -237,7 +248,9 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
         innerPaddingRight = getPaddingRight();
         innerPaddingBottom = getPaddingBottom();
 
-        extraPaddingTop = enableFloatingLabel ? floatingLabelTopSpacing + floatingLabelInsideSpacing + floatingLabelBottomSpacing : floatingLabelBottomSpacing;
+        extraPaddingTop = enableFloatingLabel ?
+                floatingLabelTopSpacing + floatingLabelInsideSpacing + floatingLabelBottomSpacing :
+                floatingLabelBottomSpacing;
         updateBottomPadding();
 
     }
@@ -246,18 +259,24 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
         Paint.FontMetrics textMetrics = textPaint.getFontMetrics();
         extraPaddingBottom = underlineTopSpacing + underlineBottomSpacing;
         if (enableErrorLabel) {
-            extraPaddingBottom += (int) ((textMetrics.descent - textMetrics.ascent) * currentNbErrorLines);
+            extraPaddingBottom += (int) ((textMetrics.descent - textMetrics.ascent) *
+                    currentNbErrorLines);
         }
         updatePadding();
     }
 
     private void initDimensions() {
         underlineTopSpacing = getResources().getDimensionPixelSize(R.dimen.underline_top_spacing);
-        underlineBottomSpacing = getResources().getDimensionPixelSize(R.dimen.underline_bottom_spacing);
-        floatingLabelTopSpacing = getResources().getDimensionPixelSize(R.dimen.floating_label_top_spacing);
-        floatingLabelBottomSpacing = getResources().getDimensionPixelSize(R.dimen.floating_label_bottom_spacing);
-        rightLeftSpinnerPadding = alignLabels ? getResources().getDimensionPixelSize(R.dimen.right_left_spinner_padding) : 0;
-        floatingLabelInsideSpacing = getResources().getDimensionPixelSize(R.dimen.floating_label_inside_spacing);
+        underlineBottomSpacing = getResources().getDimensionPixelSize(
+                R.dimen.underline_bottom_spacing);
+        floatingLabelTopSpacing = getResources().getDimensionPixelSize(
+                R.dimen.floating_label_top_spacing);
+        floatingLabelBottomSpacing = getResources().getDimensionPixelSize(
+                R.dimen.floating_label_bottom_spacing);
+        rightLeftSpinnerPadding = alignLabels ?
+                getResources().getDimensionPixelSize(R.dimen.right_left_spinner_padding) : 0;
+        floatingLabelInsideSpacing = getResources().getDimensionPixelSize(
+                R.dimen.floating_label_inside_spacing);
         errorLabelSpacing = (int) getResources().getDimension(R.dimen.error_label_spacing);
         minContentHeight = (int) getResources().getDimension(R.dimen.min_content_height);
     }
@@ -301,7 +320,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
 
         int textWidth = Math.round(textPaint.measureText(error.toString()));
         if (errorLabelAnimator == null) {
-            errorLabelAnimator = ObjectAnimator.ofInt(this, "errorLabelPosX", 0, textWidth + getWidth() / 2);
+            errorLabelAnimator = ObjectAnimator.ofInt(this,
+                    "errorLabelPosX", 0, textWidth + getWidth() / 2);
             errorLabelAnimator.setStartDelay(1000);
             errorLabelAnimator.setInterpolator(new LinearInterpolator());
             errorLabelAnimator.setDuration(150 * error.length());
@@ -355,7 +375,7 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
         if (error != null) {
             float screenWidth = getWidth() - rightLeftSpinnerPadding;
             float errorTextWidth = textPaint.measureText(error.toString(), 0, error.length());
-            return errorTextWidth > screenWidth ? true : false;
+            return errorTextWidth > screenWidth;
         }
         return false;
     }
@@ -364,7 +384,9 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
 
         int targetNbLines = minNbErrorLines;
         if (error != null) {
-            staticLayout = new StaticLayout(error, textPaint, getWidth() - getPaddingRight() - getPaddingLeft(), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true);
+            staticLayout = new StaticLayout(error, textPaint,
+                    getWidth() - getPaddingRight() - getPaddingLeft(),
+                    Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, true);
             int nbErrorLines = staticLayout.getLineCount();
             targetNbLines = Math.max(minNbErrorLines, nbErrorLines);
         }
@@ -372,7 +394,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     }
 
     private boolean isSpinnerEmpty() {
-        return (hintAdapter.getCount() == 0 && hint == null) || (hintAdapter.getCount() == 1 && hint != null);
+        return (hintAdapter.getCount() == 0 && hint == null) ||
+                (hintAdapter.getCount() == 1 && hint != null);
     }
 
     /*
@@ -391,7 +414,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
         int lineHeight;
 
         int startYLine = getHeight() - getPaddingBottom() + underlineTopSpacing;
-        int startYFloatingLabel = (int) (getPaddingTop() - floatingLabelPercent * floatingLabelBottomSpacing);
+        int startYFloatingLabel =
+                (int) (getPaddingTop() - floatingLabelPercent * floatingLabelBottomSpacing);
 
 
         if (error != null && enableErrorLabel) {
@@ -402,17 +426,21 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
             //Error Label Drawing
             if (multiline) {
                 canvas.save();
-                canvas.translate(startX + rightLeftSpinnerPadding, startYErrorLabel - errorLabelSpacing);
+                canvas.translate(startX + rightLeftSpinnerPadding,
+                        startYErrorLabel - errorLabelSpacing);
                 staticLayout.draw(canvas);
                 canvas.restore();
 
             } else {
                 //scrolling
-                canvas.drawText(error.toString(), startX + rightLeftSpinnerPadding - errorLabelPosX, startYErrorLabel, textPaint);
+                canvas.drawText(error.toString(), startX + rightLeftSpinnerPadding - errorLabelPosX,
+                        startYErrorLabel, textPaint);
                 if (errorLabelPosX > 0) {
                     canvas.save();
                     canvas.translate(textPaint.measureText(error.toString()) + getWidth() / 2, 0);
-                    canvas.drawText(error.toString(), startX + rightLeftSpinnerPadding - errorLabelPosX, startYErrorLabel, textPaint);
+                    canvas.drawText(error.toString(),
+                            startX + rightLeftSpinnerPadding - errorLabelPosX,
+                            startYErrorLabel, textPaint);
                     canvas.restore();
                 }
             }
@@ -437,14 +465,19 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
                 textPaint.setColor(isEnabled() ? floatingLabelColor : disabledColor);
             }
             if (floatingLabelAnimator.isRunning() || !floatingLabelVisible) {
-                textPaint.setAlpha((int) ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
+                textPaint.setAlpha((int)
+                        ((0.8 * floatingLabelPercent + 0.2) * baseAlpha * floatingLabelPercent));
             }
-            String textToDraw = floatingLabelText != null ? floatingLabelText.toString() : hint.toString();
+            String textToDraw = floatingLabelText != null ?
+                    floatingLabelText.toString() : hint.toString();
             if (isRtl) {
-				canvas.drawText(textToDraw, getWidth() - rightLeftSpinnerPadding - textPaint.measureText(textToDraw), startYFloatingLabel, textPaint);
-			} else {
-				canvas.drawText(textToDraw, startX + rightLeftSpinnerPadding, startYFloatingLabel, textPaint);
-			}
+                canvas.drawText(textToDraw,
+                        getWidth() - rightLeftSpinnerPadding - textPaint.measureText(textToDraw),
+                        startYFloatingLabel, textPaint);
+            } else {
+                canvas.drawText(textToDraw, startX + rightLeftSpinnerPadding,
+                        startYFloatingLabel, textPaint);
+            }
         }
 
         drawSelector(canvas, getWidth() - rightLeftSpinnerPadding, getPaddingTop() + dpToPx(8));
@@ -647,13 +680,13 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
     }
 
     public void setRtl() {
-		isRtl = true;
-		invalidate();
-	}
+        isRtl = true;
+        invalidate();
+    }
 
-	public boolean isRtl() {
-		return isRtl;
-	}
+    public boolean isRtl() {
+        return isRtl;
+    }
 
     /**
      * @deprecated {use @link #setPaddingSafe(int, int, int, int)} to keep internal computation OK
@@ -728,7 +761,8 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
         if (hint != null) {
             position++;
         }
-        return (hintAdapter == null || position < 0) ? INVALID_ROW_ID : hintAdapter.getItemId(position);
+        return (hintAdapter == null || position < 0) ?
+                INVALID_ROW_ID : hintAdapter.getItemId(position);
     }
 
     /*
@@ -751,12 +785,12 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
 
         @Override
         public int getViewTypeCount() {
-            //Workaround waiting for a Google correction (https://code.google.com/p/android/issues/detail?id=79011)
+            // Workaround waiting for a Google correction
+            // (https://code.google.com/p/android/issues/detail?id=79011)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 return 1;
             }
-            int viewTypeCount = mSpinnerAdapter.getViewTypeCount();
-            return viewTypeCount;
+            return mSpinnerAdapter.getViewTypeCount();
         }
 
         @Override
@@ -793,23 +827,32 @@ public class MaterialSpinner extends AppCompatSpinner implements ValueAnimator.A
             return buildView(position, convertView, parent, true);
         }
 
-        private View buildView(int position, View convertView, ViewGroup parent, boolean isDropDownView) {
+        private View buildView(int position, View convertView, ViewGroup parent,
+                               boolean isDropDownView) {
             if (getItemViewType(position) == HINT_TYPE) {
                 return getHintView(convertView, parent, isDropDownView);
             }
             //workaround to have multiple types in spinner
             if (convertView != null) {
-                convertView = (convertView.getTag() != null && convertView.getTag() instanceof Integer && (Integer) convertView.getTag() != HINT_TYPE) ? convertView : null;
+                convertView = (convertView.getTag() != null &&
+                        convertView.getTag() instanceof Integer &&
+                        (Integer) convertView.getTag() != HINT_TYPE) ?
+                        convertView : null;
             }
             position = hint != null ? position - 1 : position;
-            return isDropDownView ? mSpinnerAdapter.getDropDownView(position, convertView, parent) : mSpinnerAdapter.getView(position, convertView, parent);
+            return isDropDownView ?
+                    mSpinnerAdapter.getDropDownView(position, convertView, parent) :
+                    mSpinnerAdapter.getView(position, convertView, parent);
         }
 
-        private View getHintView(final View convertView, final ViewGroup parent, final boolean isDropDownView) {
+        private View getHintView(final View convertView, final ViewGroup parent,
+                                 final boolean isDropDownView) {
 
             final LayoutInflater inflater = LayoutInflater.from(mContext);
-            final int resid = isDropDownView ? android.R.layout.simple_spinner_dropdown_item : android.R.layout.simple_spinner_item;
-            final TextView textView = (TextView) inflater.inflate(resid, parent, false);
+            final int resId = isDropDownView ?
+                    android.R.layout.simple_spinner_dropdown_item :
+                    android.R.layout.simple_spinner_item;
+            final TextView textView = (TextView) inflater.inflate(resId, parent, false);
             textView.setText(hint);
             textView.setTextColor(MaterialSpinner.this.isEnabled() ? hintColor : disabledColor);
             textView.setTag(HINT_TYPE);
