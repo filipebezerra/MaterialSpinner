@@ -10,15 +10,30 @@ Add floating label text, hint and error messages.
 ![MaterialSpinner](./screenshots/screenshot.gif)
 
 ## Gradle Dependency
-Use this dependency in your build.gradle file to reference this library in your project
+The library has not been released to Maven Central, so you need to use JitPack.io.
 
+Add Jitpack repository to your root `build.gradle` file:
 ```groovy
-compile 'com.github.smtchahal:MaterialSpinner:1.1.2'
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
 ```
 
-If you use other libraries requiring nineoldandroids and appcompat-v7 like [MaterialEditText](https://github.com/rengwuxian/MaterialEditText/) make sure to exclude them :
+Add the dependency to your `app/build.gradle`:
+
 ```groovy
-compile ('com.github.smtchahal:MaterialSpinner:1.1.2'){
+dependencies {
+    ...
+    compile 'com.github.smtchahal:MaterialSpinner:1.1.3'
+}
+```
+
+If you use other libraries requiring nineoldandroids and appcompat-v7 like [MaterialEditText](https://github.com/rengwuxian/MaterialEditText/) make sure to exclude them:
+```groovy
+compile ('com.github.smtchahal:MaterialSpinner:1.1.3'){
         exclude group: 'com.nineoldandroids', module: 'library'
         exclude group: 'com.android.support', module: 'appcompat-v7'
 }
