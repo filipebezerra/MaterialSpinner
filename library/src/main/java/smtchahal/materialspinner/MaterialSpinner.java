@@ -541,10 +541,8 @@ public class MaterialSpinner extends AppCompatSpinner
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if (hint != null || floatingLabelText != null) {
-                    if (!floatingLabelVisible && position != INVALID_POSITION) {
+                    if (!floatingLabelVisible) {
                         showFloatingLabel();
-                    } else if (floatingLabelVisible && position == INVALID_POSITION) {
-                        hideFloatingLabel();
                     }
                 }
 
@@ -562,6 +560,9 @@ public class MaterialSpinner extends AppCompatSpinner
             public void onNothingSelected(AdapterView<?> parent) {
                 if (listener != null) {
                     listener.onNothingSelected(parent);
+                }
+                if (floatingLabelVisible) {
+                    hideFloatingLabel();
                 }
             }
         };
