@@ -19,5 +19,5 @@ allprojects {
 }
 
 // Version settings
-project.ext.versionCode = 8
-project.ext.versionName = "1.1.4"
+project.ext.versionCode = 9
+project.ext.versionName = "1.1.5"
