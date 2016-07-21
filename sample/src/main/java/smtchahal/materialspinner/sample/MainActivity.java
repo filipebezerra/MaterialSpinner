@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import smtchahal.materialspinner.MaterialSpinner;
 
 
+@SuppressWarnings("ALL")
 public class MainActivity extends AppCompatActivity {
 
     private static final String ERROR_MSG = "Very very very long error message to get scrolling or multiline animation when the error button is clicked";

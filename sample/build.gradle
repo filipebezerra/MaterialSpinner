@@ -8,7 +8,9 @@ android {
         applicationId "smtchahal.materialspinner.sample"
         minSdkVersion 9
         targetSdkVersion 24
+        //noinspection GroovyAssignabilityCheck
         versionCode project.versionCode
+        //noinspection GroovyAssignabilityCheck
         versionName project.versionName
     }
     buildTypes {
