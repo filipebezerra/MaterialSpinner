@@ -28,13 +28,13 @@ Add the dependency to your `app/build.gradle`:
 ```groovy
 dependencies {
     ...
-    compile 'com.github.smtchahal:MaterialSpinner:1.1.5'
+    compile 'com.github.smtchahal:MaterialSpinner:1.1.6'
 }
 ```
 
 If you use other libraries requiring nineoldandroids and appcompat-v7 like [MaterialEditText](https://github.com/rengwuxian/MaterialEditText/) make sure to exclude them:
 ```groovy
-compile ('com.github.smtchahal:MaterialSpinner:1.1.5'){
+compile ('com.github.smtchahal:MaterialSpinner:1.1.6'){
         exclude group: 'com.nineoldandroids', module: 'library'
         exclude group: 'com.android.support', module: 'appcompat-v7'
 }
