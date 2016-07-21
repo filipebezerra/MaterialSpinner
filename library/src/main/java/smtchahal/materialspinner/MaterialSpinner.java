@@ -234,8 +234,9 @@ public class MaterialSpinner extends AppCompatSpinner
 
     @Override
     public int getSelectedItemPosition() {
-        // Return 1 less than the actual value if hint is set
-        if (hint != null) {
+        // Return 1 less than the actual value if hint or
+        // floating label text is set
+        if (hint != null || floatingLabelText != null) {
             return super.getSelectedItemPosition() - 1;
         }
         return super.getSelectedItemPosition();
@@ -553,7 +554,6 @@ public class MaterialSpinner extends AppCompatSpinner
                 lastPosition = position;
 
                 if (listener != null) {
-                    position = hint != null ? position - 1 : position;
                     listener.onItemSelected(parent, view, position, id);
                 }
             }

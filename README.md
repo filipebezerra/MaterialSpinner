@@ -1,5 +1,4 @@
 # MaterialSpinner
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-MaterialSpinner-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1720)
 
 Spinner with Material Design - Down to API 9
 
