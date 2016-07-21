@@ -11,8 +11,10 @@ import smtchahal.materialspinner.MaterialSpinner;
 @SuppressWarnings("ALL")
 public class MainActivity extends AppCompatActivity {
 
-    private static final String ERROR_MSG = "Very very very long error message to get scrolling or multiline animation when the error button is clicked";
-    private static final String[] ITEMS = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"};
+    private static final String ERROR_MSG = "Very very very long error message to get scrolling " +
+            "or multiline animation when the error button is clicked";
+    private static final String[] ITEMS = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5",
+            "Item 6"};
 
     private ArrayAdapter<String> adapter;
 
