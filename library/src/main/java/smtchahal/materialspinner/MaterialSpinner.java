@@ -541,9 +541,9 @@ public class MaterialSpinner extends AppCompatSpinner
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if (hint != null || floatingLabelText != null) {
-                    if (!floatingLabelVisible && position != 0) {
+                    if (!floatingLabelVisible && position != INVALID_POSITION) {
                         showFloatingLabel();
-                    } else if (floatingLabelVisible && position == 0) {
+                    } else if (floatingLabelVisible && position == INVALID_POSITION) {
                         hideFloatingLabel();
                     }
                 }
@@ -796,7 +796,7 @@ public class MaterialSpinner extends AppCompatSpinner
         @Override
         public int getItemViewType(int position) {
             position = hint != null ? position - 1 : position;
-            return (position == -1) ? HINT_TYPE : mSpinnerAdapter.getItemViewType(position);
+            return (position == INVALID_POSITION) ? HINT_TYPE : mSpinnerAdapter.getItemViewType(position);
         }
 
         @Override
@@ -808,13 +808,13 @@ public class MaterialSpinner extends AppCompatSpinner
         @Override
         public Object getItem(int position) {
             position = hint != null ? position - 1 : position;
-            return (position == -1) ? hint : mSpinnerAdapter.getItem(position);
+            return (position == INVALID_POSITION) ? hint : mSpinnerAdapter.getItem(position);
         }
 
         @Override
         public long getItemId(int position) {
             position = hint != null ? position - 1 : position;
-            return (position == -1) ? 0 : mSpinnerAdapter.getItemId(position);
+            return (position == INVALID_POSITION) ? 0 : mSpinnerAdapter.getItemId(position);
         }
 
         @Override
