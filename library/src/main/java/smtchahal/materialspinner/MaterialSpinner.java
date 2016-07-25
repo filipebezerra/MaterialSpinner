@@ -33,8 +33,9 @@ import com.nineoldandroids.animation.ValueAnimator;
 public class MaterialSpinner extends AppCompatSpinner
         implements ValueAnimator.AnimatorUpdateListener {
 
-    @SuppressWarnings("WeakerAccess")
     public static final int DEFAULT_ARROW_WIDTH_DP = 12;
+
+    private static final String TAG = MaterialSpinner.class.getSimpleName();
 
     //Paint objects
     private Paint paint;
@@ -142,7 +143,7 @@ public class MaterialSpinner extends AppCompatSpinner
         initFloatingLabelAnimator();
         initOnItemSelectedListener();
         setMinimumHeight(getPaddingTop() + getPaddingBottom() + minContentHeight);
-        //Erase the drawable selector not to be affected by new size (extra padding)
+        //Erase the drawable selector not to be affected by new size (extra paddings)
         setBackgroundResource(R.drawable.my_background);
 
     }
@@ -152,7 +153,6 @@ public class MaterialSpinner extends AppCompatSpinner
         TypedArray defaultArray = context.obtainStyledAttributes(new int[]
                 {R.attr.colorControlNormal, R.attr.colorAccent});
         int defaultBaseColor = defaultArray.getColor(0, 0);
-        //noinspection ResourceType
         int defaultHighlightColor = defaultArray.getColor(1, 0);
         int defaultErrorColor = ContextCompat.getColor(context, R.color.error_color);
         defaultArray.recycle();
@@ -358,6 +358,11 @@ public class MaterialSpinner extends AppCompatSpinner
         return Math.round(px);
     }
 
+    private float pxToDp(float px) {
+        final DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+        return px * displayMetrics.density;
+    }
+
     private void updatePadding() {
         int left = innerPaddingLeft;
         int top = innerPaddingTop + extraPaddingTop;
@@ -387,6 +392,11 @@ public class MaterialSpinner extends AppCompatSpinner
             targetNbLines = Math.max(minNbErrorLines, nbErrorLines);
         }
         return targetNbLines;
+    }
+
+    private boolean isSpinnerEmpty() {
+        return (hintAdapter.getCount() == 0 && hint == null) ||
+                (hintAdapter.getCount() == 1 && hint != null);
     }
 
     /*
@@ -572,12 +582,10 @@ public class MaterialSpinner extends AppCompatSpinner
     * **********************************************************************************
     */
 
-    @SuppressWarnings("unused")
     public int getBaseColor() {
         return baseColor;
     }
 
-    @SuppressWarnings("unused")
     public void setBaseColor(int baseColor) {
         this.baseColor = baseColor;
         textPaint.setColor(baseColor);
@@ -585,34 +593,28 @@ public class MaterialSpinner extends AppCompatSpinner
         invalidate();
     }
 
-    @SuppressWarnings("unused")
     public int getHighlightColor() {
         return highlightColor;
     }
 
-    @SuppressWarnings("unused")
     public void setHighlightColor(int highlightColor) {
         this.highlightColor = highlightColor;
         invalidate();
     }
 
-    @SuppressWarnings("unused")
     public int getHintColor() {
         return hintColor;
     }
 
-    @SuppressWarnings("unused")
     public void setHintColor(int hintColor) {
         this.hintColor = hintColor;
         invalidate();
     }
 
-    @SuppressWarnings("unused")
     public int getErrorColor() {
         return errorColor;
     }
 
-    @SuppressWarnings("unused")
     public void setErrorColor(int errorColor) {
         this.errorColor = errorColor;
         invalidate();
@@ -623,30 +625,25 @@ public class MaterialSpinner extends AppCompatSpinner
         invalidate();
     }
 
-    @SuppressWarnings("unused")
-    public void setHint(int resId) {
-        CharSequence hint = getResources().getString(resId);
+    public void setHint(int resid) {
+        CharSequence hint = getResources().getString(resid);
         setHint(hint);
     }
 
-    @SuppressWarnings("unused")
     public CharSequence getHint() {
         return hint;
     }
 
-    @SuppressWarnings("WeakerAccess")
     public void setFloatingLabelText(CharSequence floatingLabelText) {
         this.floatingLabelText = floatingLabelText;
         invalidate();
     }
 
-    @SuppressWarnings("unused")
-    public void setFloatingLabelText(int resId) {
-        String floatingLabelText = getResources().getString(resId);
+    public void setFloatingLabelText(int resid) {
+        String floatingLabelText = getResources().getString(resid);
         setFloatingLabelText(floatingLabelText);
     }
 
-    @SuppressWarnings("unused")
     public CharSequence getFloatingLabelText() {
         return this.floatingLabelText;
     }
@@ -665,9 +662,8 @@ public class MaterialSpinner extends AppCompatSpinner
         requestLayout();
     }
 
-    @SuppressWarnings("unused")
-    public void setError(int resId) {
-        CharSequence error = getResources().getString(resId);
+    public void setError(int resid) {
+        CharSequence error = getResources().getString(resid);
         setError(error);
     }
 
@@ -680,33 +676,29 @@ public class MaterialSpinner extends AppCompatSpinner
         super.setEnabled(enabled);
     }
 
-    @SuppressWarnings("unused")
     public CharSequence getError() {
         return this.error;
     }
 
-    @SuppressWarnings("unused")
     public void setRtl() {
         isRtl = true;
         invalidate();
     }
 
-    @SuppressWarnings("unused")
     public boolean isRtl() {
         return isRtl;
     }
 
     /**
-     * Use {@link #setPaddingSafe(int, int, int, int)} to keep internal computation OK
+     * @deprecated {use @link #setPaddingSafe(int, int, int, int)} to keep internal computation OK
      */
-    @SuppressWarnings("EmptyMethod")
     @Deprecated
     @Override
     public void setPadding(int left, int top, int right, int bottom) {
         super.setPadding(left, top, right, bottom);
     }
 
-    @SuppressWarnings("SameParameterValue")
+
     public void setPaddingSafe(int left, int top, int right, int bottom) {
         innerPaddingRight = right;
         innerPaddingLeft = left;
@@ -714,6 +706,11 @@ public class MaterialSpinner extends AppCompatSpinner
         innerPaddingBottom = bottom;
 
         updatePadding();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
@@ -725,6 +722,31 @@ public class MaterialSpinner extends AppCompatSpinner
     @Override
     public SpinnerAdapter getAdapter() {
         return hintAdapter != null ? hintAdapter.getWrappedAdapter() : null;
+    }
+
+    private float getFloatingLabelPercent() {
+        return floatingLabelPercent;
+    }
+
+    private void setFloatingLabelPercent(float floatingLabelPercent) {
+        this.floatingLabelPercent = floatingLabelPercent;
+    }
+
+    private int getErrorLabelPosX() {
+        return errorLabelPosX;
+    }
+
+    private void setErrorLabelPosX(int errorLabelPosX) {
+        this.errorLabelPosX = errorLabelPosX;
+    }
+
+    private float getCurrentNbErrorLines() {
+        return currentNbErrorLines;
+    }
+
+    private void setCurrentNbErrorLines(float currentNbErrorLines) {
+        this.currentNbErrorLines = currentNbErrorLines;
+        updateBottomPadding();
     }
 
     @Override
@@ -754,8 +776,8 @@ public class MaterialSpinner extends AppCompatSpinner
 
         private static final int HINT_TYPE = -1;
 
-        private final SpinnerAdapter mSpinnerAdapter;
-        private final Context mContext;
+        private SpinnerAdapter mSpinnerAdapter;
+        private Context mContext;
 
         public HintAdapter(SpinnerAdapter spinnerAdapter, Context context) {
             mSpinnerAdapter = spinnerAdapter;
@@ -809,7 +831,7 @@ public class MaterialSpinner extends AppCompatSpinner
         private View buildView(int position, View convertView, ViewGroup parent,
                                boolean isDropDownView) {
             if (getItemViewType(position) == HINT_TYPE) {
-                return getHintView(parent, isDropDownView);
+                return getHintView(convertView, parent, isDropDownView);
             }
             //workaround to have multiple types in spinner
             if (convertView != null) {
@@ -824,7 +846,8 @@ public class MaterialSpinner extends AppCompatSpinner
                     mSpinnerAdapter.getView(position, convertView, parent);
         }
 
-        private View getHintView(final ViewGroup parent, final boolean isDropDownView) {
+        private View getHintView(final View convertView, final ViewGroup parent,
+                                 final boolean isDropDownView) {
 
             final LayoutInflater inflater = LayoutInflater.from(mContext);
             final int resId = isDropDownView ?

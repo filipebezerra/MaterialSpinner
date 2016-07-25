@@ -13,7 +13,7 @@ This project is a fork of https://github.com/ganfra/MaterialSpinner.
 ## Gradle Dependency
 The library has not been released to Maven Central, so you need to use JitPack.io.
 
-Add JitPack repository to your root `build.gradle` file:
+Add Jitpack repository to your root `build.gradle` file:
 ```groovy
 allprojects {
     repositories {

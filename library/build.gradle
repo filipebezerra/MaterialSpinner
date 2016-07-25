@@ -7,9 +7,7 @@ android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 24
-        //noinspection GroovyAssignabilityCheck
         versionCode project.versionCode
-        //noinspection GroovyAssignabilityCheck
         versionName project.versionName
     }
     buildTypes {
@@ -18,10 +16,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
 
-dependencies {
-    compile 'com.nineoldandroids:library:2.4.0'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
+
+    dependencies {
+        compile 'com.nineoldandroids:library:2.4.0'
+        compile 'com.android.support:appcompat-v7:24.0.0'
+        compile 'com.android.support:recyclerview-v7:24.0.0'
+    }
+
 }
