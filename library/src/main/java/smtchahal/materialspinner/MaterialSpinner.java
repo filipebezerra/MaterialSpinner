@@ -715,8 +715,12 @@ public class MaterialSpinner extends AppCompatSpinner
 
     @Override
     public void setAdapter(SpinnerAdapter adapter) {
-        hintAdapter = new HintAdapter(adapter, getContext());
-        super.setAdapter(hintAdapter);
+        if (adapter instanceof HintAdapter) {
+            super.setAdapter(adapter);
+        } else {
+            hintAdapter = new HintAdapter(adapter, getContext());
+            super.setAdapter(hintAdapter);
+        }
     }
 
     @Override
